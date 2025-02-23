@@ -51,13 +51,20 @@ type PostEntity {
   _count: Count!
 }
 
+type AuthPayload {
+  id: Float!
+  name: String!
+  avatar: String
+  accessToken: String!
+}
+
 type Query {
   posts: [PostEntity!]!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): UserEntity!
-  signIn(signInInput: SignInInput!): String!
+  signIn(signInInput: SignInInput!): AuthPayload!
 }
 
 input CreateUserInput {
