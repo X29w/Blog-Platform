@@ -8,12 +8,8 @@ import { UpdateUserInput } from './dto/update-user.input';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-
   @Mutation(() => UserEntity)
-  async createUser(@Args("createUserInput") createUserInput: CreateUserInput) {
-    
+  async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+    return await this.userService.create(createUserInput);
   }
-
-
-
 }
