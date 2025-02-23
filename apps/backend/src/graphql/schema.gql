@@ -2,30 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type PostEntity {
-  id: Int!
-  title: String!
-  slug: String
-  thumbnail: String
-  content: String!
-  published: Boolean!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-type CommentEntity {
-  id: Int!
-  content: String!
-  post: PostEntity!
-  author: UserEntity!
-  createdAt: DateTime!
-}
-
 type UserEntity {
   id: Int!
   name: String!
@@ -36,60 +12,67 @@ type UserEntity {
   comments: [CommentEntity!]!
 }
 
-type LikeEntity {
+type CommentEntity {
   id: Int!
-  user: UserEntity!
+  content: String!
   post: PostEntity!
-  createAt: DateTime!
+  author: UserEntity!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type TagEntity {
+  id: Int!
+  name: String!
+  posts: [PostEntity!]!
+}
+
+type Count {
+  likes: Int!
+  comments: Int!
+}
+
+type PostEntity {
+  id: Int!
+  title: String!
+  slug: String
+  thumbnail: String
+  content: String!
+  published: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  author: UserEntity!
+  tags: [TagEntity!]!
+  comments: [CommentEntity!]!
+  _count: Count!
+}
+
+type Auth {
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
 
 type Query {
   posts: [PostEntity!]!
-  user(id: Int!): UserEntity!
-  comment(id: Int!): CommentEntity!
-  like(id: Int!): LikeEntity!
+  auth(id: Int!): Auth!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): UserEntity!
-  updateUser(updateUserInput: UpdateUserInput!): UserEntity!
-  removeUser(id: Int!): UserEntity!
-  createComment(createCommentInput: CreateCommentInput!): CommentEntity!
-  updateComment(updateCommentInput: UpdateCommentInput!): CommentEntity!
-  removeComment(id: Int!): CommentEntity!
-  createLike(createLikeInput: CreateLikeInput!): LikeEntity!
-  updateLike(updateLikeInput: UpdateLikeInput!): LikeEntity!
-  removeLike(id: Int!): LikeEntity!
+  createAuth(createAuthInput: CreateAuthInput!): Auth!
+  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
+  removeAuth(id: Int!): Auth!
 }
 
-input CreateUserInput {
+input CreateAuthInput {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
-input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input CreateCommentInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateCommentInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input CreateLikeInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateLikeInput {
+input UpdateAuthInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
