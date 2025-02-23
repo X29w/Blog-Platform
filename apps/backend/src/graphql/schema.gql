@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Post {
+type PostEntity {
   id: Int!
   title: String!
   slug: String
@@ -21,45 +21,45 @@ scalar DateTime
 type CommentEntity {
   id: Int!
   content: String!
-  post: Post!
-  author: User!
+  post: PostEntity!
+  author: UserEntity!
   createdAt: DateTime!
 }
 
-type User {
+type UserEntity {
   id: Int!
   name: String!
   email: String!
   bio: String
   avatar: String
-  posts: [Post!]
+  posts: [PostEntity!]
   comments: [CommentEntity!]!
 }
 
-type Like {
+type LikeEntity {
   id: Int!
-  user: User!
-  post: Post!
+  user: UserEntity!
+  post: PostEntity!
   createAt: DateTime!
 }
 
 type Query {
-  posts: [Post!]!
-  user(id: Int!): User!
+  posts: [PostEntity!]!
+  user(id: Int!): UserEntity!
   comment(id: Int!): CommentEntity!
-  like(id: Int!): Like!
+  like(id: Int!): LikeEntity!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
+  createUser(createUserInput: CreateUserInput!): UserEntity!
+  updateUser(updateUserInput: UpdateUserInput!): UserEntity!
+  removeUser(id: Int!): UserEntity!
   createComment(createCommentInput: CreateCommentInput!): CommentEntity!
   updateComment(updateCommentInput: UpdateCommentInput!): CommentEntity!
   removeComment(id: Int!): CommentEntity!
-  createLike(createLikeInput: CreateLikeInput!): Like!
-  updateLike(updateLikeInput: UpdateLikeInput!): Like!
-  removeLike(id: Int!): Like!
+  createLike(createLikeInput: CreateLikeInput!): LikeEntity!
+  updateLike(updateLikeInput: UpdateLikeInput!): LikeEntity!
+  removeLike(id: Int!): LikeEntity!
 }
 
 input CreateUserInput {
