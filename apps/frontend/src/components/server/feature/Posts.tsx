@@ -1,6 +1,7 @@
 import RenderList from "@/components/general/RenderList";
 import type { FC } from "react";
 import PostItem from "./PostItem";
+import Pagination from "../common/pagination";
 
 interface PostsProps {
   /** 文章列表 */
@@ -26,11 +27,11 @@ const Posts: FC<PostsProps> = ({ posts, currentPage, totalPages }) => (
         renderItems={(item) => <PostItem {...item} />}
       />
     </div>
-    {/*     <Pagination
+    <Pagination
       className="mt-4"
       currentPage={currentPage}
       totalPages={totalPages}
-    /> */}
+    />
   </section>
 );
 

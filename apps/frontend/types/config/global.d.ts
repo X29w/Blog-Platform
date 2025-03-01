@@ -10,6 +10,12 @@ declare global {
     page?: number;
     pageSize?: number;
   }
+
+  /** 常规声明组件 */
+  export interface CommonComponent {
+    className?: string;
+    style?: React.CSSProperties;
+  }
 }
 
 // 确保文件被视为模块

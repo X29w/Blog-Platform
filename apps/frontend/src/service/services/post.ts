@@ -3,26 +3,18 @@
 import { authFetchGraphQL, fetchGraphQL } from "@/utils/common/graphql";
 import { print } from "graphql";
 
-import { transformTakeSkip } from "../helpers";
-import { PostFormState } from "../types/formState";
-import { uploadThumbnail } from "../upload";
-import { PostFormSchema } from "../zodSchemas/postFormSchema";
+// import { PostFormState } from "../types/formState";
+// import { uploadThumbnail } from "../upload";
+// import { PostFormSchema } from "../zodSchemas/postFormSchema";
 import {
-  CREATE_POST_MUTATION,
   DELETE_POST_MUTATION,
   GET_POST_BY_ID,
   GET_POSTS,
   GET_USER_POSTS,
-  UPDATE_POST_MUTATION,
 } from "../queries/post";
+import { transformTakeSkip } from "@/utils/common/pagination";
 
-export const fetchPosts = async ({
-  page,
-  pageSize,
-}: {
-  page?: number;
-  pageSize?: number;
-}) => {
+export const fetchPosts = async ({ page, pageSize }: Pagination) => {
   const { skip, take } = transformTakeSkip({ page, pageSize });
   const data = await fetchGraphQL(print(GET_POSTS), { skip, take });
 
@@ -54,7 +46,7 @@ export const fetchUserPosts = async ({
   };
 };
 
-export const saveNewPost = async (
+/* export const saveNewPost = async (
   state: PostFormState,
   formData: FormData
 ): Promise<PostFormState> => {
@@ -86,9 +78,9 @@ export const saveNewPost = async (
     message: "Oops, Something Went Wrong",
     data: Object.fromEntries(formData.entries()),
   };
-};
+}; */
 
-export const updatePost = async (
+/* export const updatePost = async (
   state: PostFormState,
   formData: FormData
 ): Promise<PostFormState> => {
@@ -121,7 +113,7 @@ export const updatePost = async (
     message: "Oops, Something Went Wrong",
     data: Object.fromEntries(formData.entries()),
   };
-};
+}; */
 
 export const deletePost = async (postId: number) => {
   const data = await authFetchGraphQL(print(DELETE_POST_MUTATION), {
