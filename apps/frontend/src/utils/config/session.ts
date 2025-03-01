@@ -1,7 +1,7 @@
 import { JWTPayload, jwtVerify, SignJWT } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { encodedKey } from "../../../constant/config";
+import { encodedKey } from "../../constant/config";
 
 /**
  * @name 创建 Session
