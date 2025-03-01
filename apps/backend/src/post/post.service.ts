@@ -30,8 +30,14 @@ export class PostService {
     return await this.prismaService.post.count();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: number) {
+    return await this.prismaService.post.findUnique({
+      where: { id },
+      include: {
+        author: true,
+        tags: true,
+      },
+    });
   }
 
   update(id: number, updatePostInput: UpdatePostInput) {
