@@ -1,3 +1,5 @@
+import ConditionalRender from "@/components/general/ConditionalRender";
+import SignInPanel from "@/components/server/common/SignInPanel";
 import { getSession } from "@/utils/config/session";
 import Link from "next/link";
 import type { FC } from "react";
@@ -19,11 +21,13 @@ const NavBar: FC<NavBarProps> = async () => {
         <Link href="#contact" className="">
           Contact
         </Link>
-        {/*   {session && session.user ? (
-          <Profile user={session.user} />
-        ) : (
-          <SignInPanel />
-        )} */}
+
+        <ConditionalRender
+          condition={!!(session && session.user)}
+          fallback={<SignInPanel />}
+        >
+          <a href="/api/auth/signout">Sign Out</a>
+        </ConditionalRender>
       </div>
     </>
   );
