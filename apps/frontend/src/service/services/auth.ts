@@ -1,17 +1,13 @@
 import { fetchGraphQL } from "@/utils/common/graphql";
-import { createSession } from "@/utils/config/session";
+import { SignUpFormSchema } from "@/utils/feature/zodSchema/auth";
 import { print } from "graphql";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { CREATE_USER_MUTATION, SIGN_IN_MUTATION } from "../gqlQueries";
-import { SignUpFormState } from "../types/formState";
-import { LoginFormSchema } from "../zodSchemas/loginFormSchema";
-import { SignUpFormSchema } from "../zodSchemas/signUpFormSchema";
+import { CREATE_USER_MUTATION } from "../queries/user";
 
 export const signUp = async (
-  state: SignUpFormState,
+  state: Auth.ISignUpFormState,
   formData: FormData
-): Promise<SignUpFormState> => {
+): Promise<Auth.ISignUpFormState> => {
   const validatedFields = SignUpFormSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
@@ -36,7 +32,7 @@ export const signUp = async (
   redirect("/auth/signin");
 };
 
-export const signIn = async (
+/* export const signIn = async (
   state: SignUpFormState,
   formData: FormData
 ): Promise<SignUpFormState> => {
@@ -74,3 +70,4 @@ export const signIn = async (
   revalidatePath("/");
   redirect("/");
 };
+ */
