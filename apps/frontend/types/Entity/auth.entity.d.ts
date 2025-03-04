@@ -1,25 +1,25 @@
 declare module Auth {
-  /** 注册时的表单数据 */
-  interface ISignUpFormData {
+  /** 注册/登录时的表单数据 */
+  interface IAuthFormData {
     name?: string;
     email?: string;
     password?: string;
   }
 
-  /** 注册时的表单错误信息 */
-  interface ISignUpFormErrors {
+  /** 注册/登录时的表单错误信息 */
+  interface IAuthFormErrors {
     name?: string[];
     email?: string[];
     password?: string[];
   }
 
-  /** 注册表单的基本类型 */
-  interface ISignUpFormBase {
-    data: ISignUpFormData;
-    errors?: ISignUpFormErrors;
+  /** 注册/登录表单的基本类型 */
+  interface IAuthFormBase {
+    data: IAuthFormData;
+    errors?: IAuthFormErrors;
     message?: string;
   }
 
-  /** 注册表单的状态类型 */
-  export type ISignUpFormState = OneOf<[ISignUpFormBase, undefined]>;
+  /** 注册/登录表单的状态类型 */
+  export type IAuthFormState = OneOf<[IAuthFormBase, undefined]>;
 }

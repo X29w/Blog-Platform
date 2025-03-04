@@ -1,13 +1,20 @@
+"use server";
 import { fetchGraphQL } from "@/utils/common/graphql";
-import { SignUpFormSchema } from "@/utils/feature/zodSchema/auth";
+import {
+  LoginFormSchema,
+  SignUpFormSchema,
+} from "@/utils/feature/zodSchema/auth";
 import { print } from "graphql";
 import { redirect } from "next/navigation";
 import { CREATE_USER_MUTATION } from "../queries/user";
+import { SIGN_IN_MUTATION } from "../queries/auth";
+import { createSession } from "@/utils/config/session";
+import { revalidatePath } from "next/cache";
 
 export const signUp = async (
-  state: Auth.ISignUpFormState,
+  state: Auth.IAuthFormState,
   formData: FormData
-): Promise<Auth.ISignUpFormState> => {
+): Promise<Auth.IAuthFormState> => {
   const validatedFields = SignUpFormSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
@@ -32,10 +39,10 @@ export const signUp = async (
   redirect("/auth/signin");
 };
 
-/* export const signIn = async (
-  state: SignUpFormState,
+export const signIn = async (
+  state: Auth.IAuthFormState,
   formData: FormData
-): Promise<SignUpFormState> => {
+): Promise<Auth.IAuthFormState> => {
   const validatedFields = LoginFormSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
@@ -70,4 +77,3 @@ export const signUp = async (
   revalidatePath("/");
   redirect("/");
 };
- */
