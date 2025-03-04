@@ -2,6 +2,7 @@
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/20/solid";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { getPostLikeData, likePost, unLikePost } from "@/service/services/like";
 
 type Props = {
   postId: number;

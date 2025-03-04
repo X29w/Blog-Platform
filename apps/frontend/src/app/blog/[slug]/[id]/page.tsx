@@ -3,6 +3,7 @@ import { fetchGraphQL } from "@/utils/common/graphql";
 import { getSession } from "@/utils/config/session";
 import type { FC } from "react";
 import Image from "next/image";
+import SanitizedContent from "./_components/client/SanitizedContent";
 
 interface PostPageProps {
   params: {
@@ -30,7 +31,7 @@ const PostPage: FC<PostPageProps> = async ({ params }) => {
         />
       </div>
 
-      {/* <SanitizedContent content={post.content} /> */}
+      <SanitizedContent content={post.content} />
 
       {/* <Like postId={post.id} user={session?.user} /> */}
       {/* Todo: Put the Post Comments Here */}
