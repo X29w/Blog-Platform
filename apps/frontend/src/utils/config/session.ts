@@ -1,7 +1,7 @@
 import { JWTPayload, jwtVerify, SignJWT } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { encodedKey, secretKey } from "../../constant/config";
+import { encodedKey } from "../../constant/config";
 
 /**
  * @name 创建 Session
@@ -9,14 +9,6 @@ import { encodedKey, secretKey } from "../../constant/config";
  * @param {Session.Session} payload
  */
 export const createSession = async (payload: Session.Session) => {
-  console.log("payload", payload);
-console.log("secretKey",secretKey)
-
-  console.log("encodedKey", encodedKey);
-  if (!encodedKey) {
-    console.log("******************************");
-  }
-
   const session = await new SignJWT(payload as unknown as JWTPayload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
