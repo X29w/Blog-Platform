@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { LikeService } from './like.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { LikeResolver } from './like.resolver';
+import { LikeService } from './like.service';
 
 @Module({
-  providers: [LikeResolver, LikeService],
+  providers: [LikeResolver, LikeService, PrismaService],
 })
 export class LikeModule {}

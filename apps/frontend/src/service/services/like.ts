@@ -19,13 +19,13 @@ export const getPostLikeData = async (postId: number) => {
 };
 
 export const likePost = async (postId: number) => {
-  const data = await authFetchGraphQL(print(LIKE_POST_MUTATION), {
+  await authFetchGraphQL(print(LIKE_POST_MUTATION), {
     postId,
   });
 };
 
 export const unLikePost = async (postId: number) => {
-  const data = await authFetchGraphQL(print(UNLIKE_POST_MUTATION), {
+  await authFetchGraphQL(print(UNLIKE_POST_MUTATION), {
     postId,
   });
 };
