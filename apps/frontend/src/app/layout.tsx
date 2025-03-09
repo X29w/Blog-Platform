@@ -1,7 +1,9 @@
 import NavBar from "@/components/client/common/NavBar";
 import NavbarContainer from "@/components/server/config/NavbarContainer";
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import "./globals.css";
+import Provider from "./provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,10 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` antialiased`}>
-        <NavbarContainer>
-          <NavBar />
-        </NavbarContainer>
-        {children}
+        <Provider>
+          <NavbarContainer>
+            <NavBar />
+          </NavbarContainer>
+          {children}
+          <Toaster />
+        </Provider>
       </body>
     </html>
   );

@@ -4,6 +4,8 @@ import { getSession } from "@/utils/config/session";
 import type { FC } from "react";
 import Image from "next/image";
 import SanitizedContent from "./_components/client/SanitizedContent";
+import Comments from "./_components/client/Comments";
+import Like from "./_components/client/Like";
 
 interface PostPageProps {
   params: {
@@ -33,9 +35,9 @@ const PostPage: FC<PostPageProps> = async ({ params }) => {
 
       <SanitizedContent content={post.content} />
 
-      {/* <Like postId={post.id} user={session?.user} /> */}
+      <Like postId={post.id} user={session?.user} />
       {/* Todo: Put the Post Comments Here */}
-      {/* <Comments user={session?.user} postId={post.id} /> */}
+      <Comments user={session?.user} postId={post.id} />
     </main>
   );
 };

@@ -30,4 +30,19 @@ declare module Comment {
      */
     updatedAt: Date;
   }
+
+  interface ICommentFormBaseState {
+    data?: {
+      content?: string;
+      postId?: number;
+    };
+    errors?: {
+      content?: string[];
+    };
+    message?: string;
+    ok?: boolean;
+    open?: boolean;
+  }
+
+  export type ICommentFormState = OneOf<[ICommentFormBaseState, undefined]>;
 }
