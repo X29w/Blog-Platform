@@ -61,23 +61,5 @@ export class AuthService {
     return currentUser;
   }
 
-  async validateGoogleUser(googleUser: CreateUserInput) {
-    const user = await this.prismaService.user.findUnique({
-      where: {
-        email: googleUser.email,
-      },
-    });
-    if (user) {
-      const { password, ...authUser } = user;
-      return authUser;
-    }
 
-    const dbUser = await this.prismaService.user.create({
-      data: {
-        ...googleUser,
-      },
-    });
-    const { password, ...authUser } = dbUser;
-    authUser;
-  }
 }
