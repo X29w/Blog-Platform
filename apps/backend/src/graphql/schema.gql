@@ -31,7 +31,7 @@ type TagEntity {
   posts: [PostEntity!]!
 }
 
-type Count {
+type CountEntity {
   likes: Int!
   comments: Int!
 }
@@ -48,7 +48,7 @@ type PostEntity {
   author: UserEntity!
   tags: [TagEntity!]!
   comments: [CommentEntity!]!
-  _count: Count!
+  _count: CountEntity!
 }
 
 type AuthPayload {
@@ -62,6 +62,8 @@ type Query {
   posts(skip: Float, take: Float): [PostEntity!]!
   postCount: Int!
   getPostById(id: Int!): PostEntity!
+  getUserPosts(skip: Int, take: Int): [PostEntity!]!
+  userPostCount: Int!
   getPostComments(postId: Int!, take: Int = 12, skip: Int = 0): [CommentEntity!]!
   postCommentCount(postId: Int!): Int!
   postLikesCount(postId: Int!): Int!
@@ -69,11 +71,31 @@ type Query {
 }
 
 type Mutation {
+  createPost(createPostInput: CreatePostInput!): PostEntity!
+  updatePost(updatePostInput: UpdatePostInput!): PostEntity!
+  deletePost(postId: Int!): Boolean!
   createUser(createUserInput: CreateUserInput!): UserEntity!
   createComment(createCommentInput: CreateCommentInput!): CommentEntity!
   likePost(postId: Int!): Boolean!
   unlikePost(postId: Int!): Boolean!
   signIn(signInInput: SignInInput!): AuthPayload!
+}
+
+input CreatePostInput {
+  title: String!
+  content: String!
+  thumbnail: String
+  tags: [String!]!
+  published: Boolean!
+}
+
+input UpdatePostInput {
+  title: String
+  content: String
+  thumbnail: String
+  tags: [String!]
+  published: Boolean
+  postId: Int!
 }
 
 input CreateUserInput {

@@ -2,17 +2,16 @@
 
 import { authFetchGraphQL, fetchGraphQL } from "@/utils/common/graphql";
 import { print } from "graphql";
-
-// import { PostFormState } from "../types/formState";
-// import { uploadThumbnail } from "../upload";
-// import { PostFormSchema } from "../zodSchemas/postFormSchema";
 import {
+  CREATE_POST_MUTATION,
   DELETE_POST_MUTATION,
   GET_POST_BY_ID,
   GET_POSTS,
   GET_USER_POSTS,
+  UPDATE_POST_MUTATION,
 } from "../queries/post";
 import { transformTakeSkip } from "@/utils/common/pagination";
+import { PostFormSchema } from "@/utils/feature/zodSchema/post";
 
 export const fetchPosts = async ({ page, pageSize }: Pagination) => {
   const { skip, take } = transformTakeSkip({ page, pageSize });
@@ -46,10 +45,10 @@ export const fetchUserPosts = async ({
   };
 };
 
-/* export const saveNewPost = async (
-  state: PostFormState,
+export async function saveNewPost(
+  state: Post.IPostForm,
   formData: FormData
-): Promise<PostFormState> => {
+): Promise<Post.IPostForm> {
   const validatedFields = PostFormSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
@@ -59,18 +58,28 @@ export const fetchUserPosts = async ({
       data: Object.fromEntries(formData.entries()),
       errors: validatedFields.error.flatten().fieldErrors,
     };
-  let thumbnailUrl = "";
+  // let thumbnailUrl = "";
   // Todo:Upload Thumbnail to supabase
-  if (validatedFields.data.thumbnail)
-    thumbnailUrl = await uploadThumbnail(validatedFields.data.thumbnail);
+  // if (validatedFields.data.thumbnail)
+  // thumbnailUrl = await uploadThumbnail(validatedFields.data.thumbnail);
 
   // Todo: call garphql api
 
+  const input = {
+    ...validatedFields.data,
+    ...(validatedFields.data.postId && {
+      postId: validatedFields.data.postId,
+    }),
+    thumbnail: "",
+  };
+  if (isNaN(validatedFields.data.postId as number)) {
+    delete input.postId;
+  }
+
+  console.log("****************************", input);
+
   const data = await authFetchGraphQL(print(CREATE_POST_MUTATION), {
-    input: {
-      ...validatedFields.data,
-      thumbnail: thumbnailUrl,
-    },
+    input,
   });
 
   if (data) return { message: "Success! New Post Saved", ok: true };
@@ -78,12 +87,12 @@ export const fetchUserPosts = async ({
     message: "Oops, Something Went Wrong",
     data: Object.fromEntries(formData.entries()),
   };
-}; */
+}
 
-/* export const updatePost = async (
-  state: PostFormState,
+export async function updatePost(
+  state: Post.IPostForm,
   formData: FormData
-): Promise<PostFormState> => {
+): Promise<Post.IPostForm> {
   const validatedFields = PostFormSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
@@ -95,16 +104,14 @@ export const fetchUserPosts = async ({
     };
 
   // Todo: check if thumbnail has been changed
-  const { thumbnail, ...inputs } = validatedFields.data;
+  const { ...inputs } = validatedFields.data;
 
-  let thumbnailUrl = "";
   // Todo:Upload Thumbnail to supabase
-  if (thumbnail) thumbnailUrl = await uploadThumbnail(thumbnail);
 
   const data = await authFetchGraphQL(print(UPDATE_POST_MUTATION), {
     input: {
       ...inputs,
-      ...(thumbnailUrl && { thumbnail: thumbnailUrl }),
+      thumbnail: "",
     },
   });
 
@@ -113,7 +120,7 @@ export const fetchUserPosts = async ({
     message: "Oops, Something Went Wrong",
     data: Object.fromEntries(formData.entries()),
   };
-}; */
+}
 
 export const deletePost = async (postId: number) => {
   const data = await authFetchGraphQL(print(DELETE_POST_MUTATION), {
