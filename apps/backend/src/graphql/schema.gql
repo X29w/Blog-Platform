@@ -62,6 +62,7 @@ type Query {
   posts(skip: Float, take: Float): [PostEntity!]!
   postCount: Int!
   getPostById(id: Int!): PostEntity!
+  comment(postId: Int!, take: Int = 12, skip: Int = 0): [CommentEntity!]!
 }
 
 type Mutation {
